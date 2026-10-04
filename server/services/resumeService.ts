@@ -1,0 +1,3 @@
+export function validateResume(file:File){if(file.type!=='application/pdf'&&!file.name.toLowerCase().endsWith('.pdf'))throw new Error('Upload a PDF file.');if(file.size>5*1024*1024)throw new Error('Resume must be 5 MB or smaller.');if(file.size===0)throw new Error('This PDF is empty.');}
+// PDF text extraction is kept behind this service so a provider can be added without changing interview logic.
+export async function extractResumeText(buffer:Buffer){const raw=buffer.toString('latin1');const matches=[...raw.matchAll(/\(([^()]*(?:\\.[^()]*)*)\)\s*Tj/g)].map(m=>m[1].replace(/\\([()\\])/g,'$1'));return matches.join(' ').replace(/\s+/g,' ').slice(0,5000);}

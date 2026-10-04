@@ -1,0 +1,3 @@
+import mongoose, { Schema } from 'mongoose';
+const InterviewSchema = new Schema({ userId: { type: Schema.Types.ObjectId, ref: 'User', required: true, index: true }, type: { type: String, enum: ['Technical','HR','Mixed'], required: true }, domain: { type: String, required: true }, topics: [String], difficulty: String, questions: [{ question: String, topic: String, difficulty: String }], answers: [{ questionIndex: Number, text: String, evaluation: Schema.Types.Mixed }], score: Number, report: Schema.Types.Mixed, duration: Number, status: { type: String, enum: ['active','completed'], default: 'active' }, completedAt: Date }, { timestamps: true });
+export default mongoose.models.Interview || mongoose.model('Interview', InterviewSchema);
